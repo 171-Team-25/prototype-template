@@ -9,6 +9,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject projectilePrefab;   // The projectile (ball) prefab to shoot
     public float attackForce = 10f;       // The force with which the projectile is shot
     public float spawnOffset = 1f;        // Offset distance to spawn the projectile outside the character
+    public float rotationSpeed = 10f;     // The speed at which the player rotates toward the shooting direction
 
     private Camera mainCamera;
     private bool canShoot = true;         // Variable to prevent multiple shots per click
@@ -39,7 +40,7 @@ public class PlayerAttack : MonoBehaviour
 
                 // Calculate the direction from the player to the target
                 Vector3 direction = (targetPosition - transform.position).normalized;
-                direction.y = 0.0f;
+                direction.y = 0.0f;  // Ensure the player only rotates on the y-axis
 
                 // Calculate the spawn position (offset from player)
                 Vector3 spawnPosition = transform.position + direction * spawnOffset;
@@ -52,9 +53,11 @@ public class PlayerAttack : MonoBehaviour
                 if (rb != null)
                 {
                     rb.AddForce(direction * attackForce, ForceMode.Impulse);
-                    Debug.Log("Direction: " + direction.ToString());
-                    Debug.Log("Force: " + attackForce.ToString());
                 }
+
+                // Rotate the player toward the target direction
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = targetRotation;
 
                 // Set canShoot to false to prevent firing again until the click is released
                 canShoot = false;

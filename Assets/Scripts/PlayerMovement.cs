@@ -26,14 +26,13 @@ public class PlayerMovement : MonoBehaviour
     public void OnSprint(InputAction.CallbackContext context)
     {
         isSprinting = context.ReadValue<float>() >= 0.1f;
-        Debug.Log("Sprinting");
     }
 
     private void Update()
     {
         // Convert input direction to world space
         Vector3 move = new Vector3(inputDirection.x, 0, inputDirection.y);
-        move = transform.TransformDirection(move);
+        //move = transform.TransformDirection(move);    MAKE IT SO IT DOESNT MATTER WHAT THE ROTATION IS
 
         // Apply movement
         if(isSprinting)

@@ -19,7 +19,7 @@ public class Damageable : MonoBehaviour
         {
             //PLAY DEATH ANIMATION
             Destroy(gameObject);
-            Debug.Log(this.ToString() + " DIED");
+            Debug.Log(this.name.ToString() + " DIED");
         }
     }
 }
