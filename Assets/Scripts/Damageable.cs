@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
-    [SerializeField] float maxHealth = 100f;
-    private float health;
+    [SerializeField] protected float maxHealth = 100f;
+    public float health;
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
         if(health <= 0)
