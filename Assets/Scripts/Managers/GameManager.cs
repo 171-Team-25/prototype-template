@@ -93,25 +93,14 @@ public class GameManager : MonoBehaviour
             {
                 redTeam.Add(player);
                 player.GetComponent<PlayerClass>().Respawn(redSpawnPoint, 0);
-                AssignCameraToPlayer(player, player1Camera);
             }
             if (player.GetComponent<PlayerClass>().GetTeam() == teamName.blue)
             {
                 blueTeam.Add(player);
                 player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint, 0);
-                AssignCameraToPlayer(player, player2Camera);
             }
             redTeam.Add(player);
         }
-    }
-    private void AssignCameraToPlayer(GameObject player, Camera playerCamera)
-    {
-        // Set camera position above the player
-        playerCamera.transform.position = new Vector3(player.transform.position.x, 20f, player.transform.position.z);  // Adjust height as needed
-        playerCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);  // Keep top-down view
-
-        // Optionally, make the camera follow the player
-        playerCamera.gameObject.AddComponent<CameraFollow>().SetTarget(player.transform);  // Add camera follow behavior
     }
     public void AddPlayer(GameObject player)
     {
