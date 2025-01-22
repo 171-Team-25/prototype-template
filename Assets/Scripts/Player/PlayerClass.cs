@@ -48,15 +48,16 @@ public class PlayerClass : Damageable
         return team;
     }
 
-    public void Respawn(Vector3 spawnPoint, float time)
+    public void Respawn(Transform spawnPoint, float time)
     {
         StartCoroutine(RespawnCoroutine(spawnPoint, time));
     }
 
-    private IEnumerator RespawnCoroutine(Vector3 spawnPoint, float time)
+    private IEnumerator RespawnCoroutine(Transform spawnPoint, float time)
     {
         yield return new WaitForSeconds(time);
-        transform.position = spawnPoint;
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
         gameObject.SetActive(true);
     }
 

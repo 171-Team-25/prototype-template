@@ -36,5 +36,6 @@ public class ProjectileScript : MonoBehaviour
 
         // Destroy the projectile upon collision
         Destroy(gameObject);
+
     }
 }

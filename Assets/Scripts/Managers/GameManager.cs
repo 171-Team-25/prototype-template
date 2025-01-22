@@ -11,6 +11,9 @@ public enum GamePhase
 }
 public class GameManager : MonoBehaviour
 {
+    public GameObject playerPrefab;  // Your player prefab
+    public Camera player1Camera;  // Camera for Player 1
+    public Camera player2Camera;  // Camera for Player 2
     public GamePhase CurrentPhase { get; private set; } = GamePhase.Upgrade;
 
     public static GameManager Instance { get; private set; }
@@ -24,8 +27,8 @@ public class GameManager : MonoBehaviour
     private List<GameObject> redCrystals = new List<GameObject>();
     private List<GameObject> blueCrystals = new List<GameObject>();
 
-    private Vector3 redSpawnPoint;
-    private Vector3 blueSpawnPoint;
+    public Transform redSpawnPoint;
+    public Transform blueSpawnPoint;
 
     private int redScore = 0, blueScore = 0;
 
@@ -45,8 +48,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         TransitionToNextPhase();
-        redSpawnPoint = GameObject.Find("RedSpawn").transform.position;
-        blueSpawnPoint = GameObject.Find("BlueSpawn").transform.position;
+        redSpawnPoint = GameObject.Find("RedSpawn").transform;
+        blueSpawnPoint = GameObject.Find("BlueSpawn").transform;
     }
 
     public void StartUpgradePhase()
@@ -90,16 +93,26 @@ public class GameManager : MonoBehaviour
             {
                 redTeam.Add(player);
                 player.GetComponent<PlayerClass>().Respawn(redSpawnPoint, 0);
+                AssignCameraToPlayer(player, player1Camera);
             }
             if (player.GetComponent<PlayerClass>().GetTeam() == teamName.blue)
             {
                 blueTeam.Add(player);
                 player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint, 0);
+                AssignCameraToPlayer(player, player2Camera);
             }
             redTeam.Add(player);
         }
     }
+    private void AssignCameraToPlayer(GameObject player, Camera playerCamera)
+    {
+        // Set camera position above the player
+        playerCamera.transform.position = new Vector3(player.transform.position.x, 20f, player.transform.position.z);  // Adjust height as needed
+        playerCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);  // Keep top-down view
 
+        // Optionally, make the camera follow the player
+        playerCamera.gameObject.AddComponent<CameraFollow>().SetTarget(player.transform);  // Add camera follow behavior
+    }
     public void AddPlayer(GameObject player)
     {
         playerList.Add(player);
