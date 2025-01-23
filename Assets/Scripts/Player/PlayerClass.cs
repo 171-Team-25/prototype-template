@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public enum teamName{
     red,
@@ -29,18 +30,16 @@ public class PlayerClass : Damageable
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            gameObject.AddComponent<AsolUpgrade>();
+        }
     }
 
-    public override void TakeDamage(float damage)
+    public override void Die()
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            //PLAY DEATH ANIMATION
-            GameManager.Instance.PlayerDie(gameObject);
-            Debug.Log(this.name.ToString() + " DIED");
-        }
+        GameManager.Instance.PlayerDie(gameObject);
+        Debug.Log(this.name.ToString() + " DIED");
     }
 
     public teamName GetTeam()

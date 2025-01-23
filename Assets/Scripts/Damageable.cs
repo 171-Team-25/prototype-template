@@ -12,14 +12,19 @@ public class Damageable : MonoBehaviour
         health = maxHealth;
     }
 
-    public virtual void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if(health <= 0)
         {
-            //PLAY DEATH ANIMATION
-            Destroy(gameObject);
-            Debug.Log(this.name.ToString() + " DIED");
+            Die();
         }
+    }
+
+    public virtual void Die()
+    {
+        //PLAY DEATH ANIMATION
+        Destroy(gameObject);
+        Debug.Log(this.name.ToString() + " DIED");
     }
 }
