@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
-    [SerializeField] protected float maxHealth = 100f;
+    public float maxHealth = 100f;
     public float health;
     public teamName team;
     // Start is called before the first frame update
@@ -13,15 +13,20 @@ public class Damageable : MonoBehaviour
         health = maxHealth;
     }
 
-    public void TakeDamage(float damage, teamName team)
+    public bool TakeDamage(float damage, teamName team)
     {
         if (team != this.team)
         {
             health -= damage;
+            if (health <= 0)
+            {
+                Die();
+            }
+            return true;
         }
-        if(health <= 0)
+        else
         {
-            Die();
+            return false;
         }
     }
 

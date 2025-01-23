@@ -33,6 +33,10 @@ public class PlayerClass : Damageable
         {
             gameObject.AddComponent<AsolUpgrade>();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            gameObject.AddComponent<ShieldUpgrade>();
+        }
     }
 
     public override void Die()

@@ -31,11 +31,15 @@ public class ProjectileScript : MonoBehaviour
         if (damageable != null)
         {
             // Apply damage to the Damageable object
-            damageable.TakeDamage(damage, shooter.GetComponent<PlayerClass>().team);
+            if(damageable.TakeDamage(damage, shooter.GetComponent<PlayerClass>().team))
+            {
+                Destroy(gameObject);
+            }
         }
-
-        // Destroy the projectile upon collision
-        Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SetShooter(GameObject player)
