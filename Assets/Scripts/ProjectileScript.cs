@@ -20,18 +20,12 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Ignore collision with the shooter (player)
-        if (other.gameObject == shooter)
-        {
-            return;  // Skip collision handling if it’s the shooter
-        }
-
         // Check if the object hit is Damageable
         Damageable damageable = other.GetComponent<Damageable>();
         if (damageable != null)
         {
             // Apply damage to the Damageable object
-            if(damageable.TakeDamage(damage, shooter.GetComponent<PlayerClass>().team))
+            if(damageable.TakeDamage(damage, shooter.GetComponent<PlayerClass>().team)) //only if it's on another team
             {
                 Destroy(gameObject);
             }
