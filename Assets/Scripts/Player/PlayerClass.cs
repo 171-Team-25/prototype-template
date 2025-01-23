@@ -5,13 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 public enum teamName{
     red,
-    blue
+    blue, 
+    neutral,
 }
 
 public class PlayerClass : Damageable
 {
-    private teamName team;
-
     void Start()
     {
         health = maxHealth;

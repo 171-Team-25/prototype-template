@@ -47,6 +47,7 @@ public class PlayerAttack : MonoBehaviour
 
                 // Instantiate the projectile at the new spawn position
                 GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+                projectile.GetComponent<ProjectileScript>().SetShooter(gameObject);
 
                 // Get the Rigidbody component and apply force to shoot the projectile
                 Rigidbody rb = projectile.GetComponent<Rigidbody>();

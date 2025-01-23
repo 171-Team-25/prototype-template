@@ -13,6 +13,7 @@ public class AsolUpgrade : UpgradeBase
 
     void Start()
     {
+        upgradeType = UpgradeType.damage;
         ballPrefab = Resources.Load<GameObject>("Prefabs/AsolBalls");
         effectValue = 10f;
         balls = new GameObject[numberOfBalls];

@@ -6,7 +6,7 @@ public enum UpgradeType
 {
     damage,
     heal,
-    shield,
+    defensive,
     buff,
     other
 }

@@ -6,15 +6,19 @@ public class Damageable : MonoBehaviour
 {
     [SerializeField] protected float maxHealth = 100f;
     public float health;
+    public teamName team;
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, teamName team)
     {
-        health -= damage;
+        if (team != this.team)
+        {
+            health -= damage;
+        }
         if(health <= 0)
         {
             Die();

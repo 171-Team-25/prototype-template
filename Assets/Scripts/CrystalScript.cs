@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CrystalScript : Damageable
 {
-    [SerializeField] teamName team = teamName.red;
-
     private void Start()
     {
         GameManager.Instance.AddCrystal(gameObject);

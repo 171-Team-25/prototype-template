@@ -12,7 +12,7 @@ public class ProjectileScript : MonoBehaviour
     private void Start()
     {
         // Store the shooter (player) who fired the projectile
-        shooter = transform.root.gameObject;
+        
 
         // Destroy the projectile after a set lifetime if it doesn't collide with anything
         Destroy(gameObject, lifetime);
@@ -31,10 +31,16 @@ public class ProjectileScript : MonoBehaviour
         if (damageable != null)
         {
             // Apply damage to the Damageable object
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(damage, shooter.GetComponent<PlayerClass>().team);
         }
 
         // Destroy the projectile upon collision
         Destroy(gameObject);
+    }
+
+    public void SetShooter(GameObject player)
+    {
+        shooter = player;
+        Debug.Log(shooter.ToString() + " shot this fireball");
     }
 }

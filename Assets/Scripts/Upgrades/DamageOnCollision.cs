@@ -11,7 +11,7 @@ public class DamageOnCollision : MonoBehaviour
         var damageable = other.GetComponent<Damageable>();
         if (damageable != null)
         {
-            damageable.TakeDamage(damageAmount);
+            damageable.TakeDamage(damageAmount, gameObject.GetComponent<PlayerClass>().team);
         }
     }
 }
