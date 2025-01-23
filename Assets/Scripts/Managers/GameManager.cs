@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private System.Random rng = new System.Random(); // Random generator for better randomness
     private Sprite currCardVisual;
     public delegate void GameEvent();
-    public static event GameEvent UpgradeEvent;
+    public static event GameEvent UpgradeEvent, CombatPhaseStart;
 
     private void Awake()
     {
@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     public void StartCombatPhase()
     {
+        CombatPhaseStart.Invoke();
         CurrentPhase = GamePhase.Combat;
         Debug.Log("Combat phase started.");
         InitializePlayers();

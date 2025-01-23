@@ -16,15 +16,23 @@ public class UpgradeManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.UpgradeEvent += ChooseAndDisplayUpgrades;
+        GameManager.CombatPhaseStart += MakeSureUIIsTurnedOff;
     }
 
     private void OnDisable()
     {
         GameManager.UpgradeEvent -= ChooseAndDisplayUpgrades;
+        GameManager.CombatPhaseStart -= MakeSureUIIsTurnedOff;
+    }
+
+    private void MakeSureUIIsTurnedOff()
+    {
+        canvas.gameObject.SetActive(false);
     }
 
     private void ChooseAndDisplayUpgrades()
     {
+        canvas.gameObject.SetActive(true);
         upgradeCards = GameManager.Instance.GetRandomUpgradeCards(3);
         button0.GetComponent<Image>().sprite = upgradeCards[0].upgradeVisual;
         button0.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = upgradeCards[0].upgradeText;
