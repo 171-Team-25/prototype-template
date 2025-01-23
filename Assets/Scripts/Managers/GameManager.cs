@@ -11,9 +11,9 @@ public enum GamePhase
 }
 public class GameManager : MonoBehaviour
 {
-    public GameObject playerPrefab;  // Your player prefab
-    public Camera player1Camera;  // Camera for Player 1
-    public Camera player2Camera;  // Camera for Player 2
+    //public GameObject playerPrefab;  // Your player prefab
+    //public Camera player1Camera;  // Camera for Player 1
+    //public Camera player2Camera;  // Camera for Player 2
     public GamePhase CurrentPhase { get; private set; } = GamePhase.Upgrade;
 
     public static GameManager Instance { get; private set; }

@@ -8,15 +8,17 @@ public class ProjectileScript : MonoBehaviour
     public float damage = 25f;   // Damage dealt by the projectile
 
     private GameObject shooter;  // Reference to the player (shooter) who fired the projectile
+    
+    
 
     private void Start()
     {
         // Store the shooter (player) who fired the projectile
         shooter = transform.root.gameObject;
-
         // Destroy the projectile after a set lifetime if it doesn't collide with anything
         Destroy(gameObject, lifetime);
     }
+    // Initialize method to set properties dynamically
 
     private void OnTriggerEnter(Collider other)
     {
