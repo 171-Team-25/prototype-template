@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Build;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum GamePhase
 {
+    Start,
+    Lobby,
     Upgrade,
     Combat
 }
 public class GameManager : MonoBehaviour
 {
-    public GamePhase CurrentPhase { get; private set; } = GamePhase.Upgrade;
+    public GamePhase CurrentPhase { get; private set; } = GamePhase.Start;
 
     public static GameManager Instance { get; private set; }
 
@@ -26,10 +29,10 @@ public class GameManager : MonoBehaviour
     private List<GameObject> redCrystals = new List<GameObject>();
     private List<GameObject> blueCrystals = new List<GameObject>();
 
-    private Vector3 redSpawnPoint;
-    private Vector3 blueSpawnPoint;
+    public Vector3 redSpawnPoint, blueSpawnPoint, lobbySpawnPoint;
 
     private int redScore = 0, blueScore = 0;
+    private bool inLobby = false;
 
     private List<UpgradeCard> upgradeCards = new List<UpgradeCard>();
     private System.Random rng = new System.Random(); // Random generator for better randomness
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
         TransitionToNextPhase();
         redSpawnPoint = GameObject.Find("RedSpawn").transform.position;
         blueSpawnPoint = GameObject.Find("BlueSpawn").transform.position;
+        lobbySpawnPoint = GameObject.Find("LobbySpawn").transform.position;
     }
 
     private void InitializeUpgradeCards()
@@ -99,9 +103,9 @@ public class GameManager : MonoBehaviour
 
     public void StartUpgradePhase()
     {
-        CurrentPhase = GamePhase.Upgrade;
         Debug.Log("Upgrade phase started.");
-        UpgradeEvent.Invoke();
+        CurrentPhase = GamePhase.Upgrade;
+        UpgradeEvent?.Invoke();
         playersReady = playerList.Count;
         // Add logic specific to the Upgrade Phase
         // For example: enable upgrade UI, stop combat logic, etc.
@@ -118,14 +122,37 @@ public class GameManager : MonoBehaviour
 
     public void StartCombatPhase()
     {
-        CombatPhaseStart.Invoke();
-        CurrentPhase = GamePhase.Combat;
         Debug.Log("Combat phase started.");
+        CombatPhaseStart?.Invoke();
+        CurrentPhase = GamePhase.Combat;
         InitializePlayers();
         InitializeCrystals();
 
         // Add logic specific to the Combat Phase
         // For example: spawn enemies, enable combat logic, etc.
+    }
+
+    public void StartLobbyPhase()
+    {
+        Debug.Log("Lobby phase STARTED");
+        CurrentPhase = GamePhase.Lobby;
+        inLobby = true;
+        GameObject.Find("PlayerManager").GetComponent<PlayerInputManager>().EnableJoining();
+        foreach (GameObject p in playerList)
+        {
+            p.SetActive(true);
+            p.GetComponent<PlayerClass>().Respawn(lobbySpawnPoint, 0);
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha0) && inLobby == true)
+        {
+            inLobby = false;
+            TransitionToNextPhase();
+        }
+
     }
 
     public void TransitionToNextPhase()
@@ -134,9 +161,27 @@ public class GameManager : MonoBehaviour
         {
             StartCombatPhase();
         }
+        else if (CurrentPhase == GamePhase.Start)
+        {
+            StartLobbyPhase();
+        }
         else if (CurrentPhase == GamePhase.Combat)
         {
-            StartUpgradePhase();
+            if( redScore >= 3 || blueScore >= 3)
+            {
+                StartLobbyPhase();
+            }
+            else
+            {
+                StartUpgradePhase();
+            }
+        }
+        else if (CurrentPhase == GamePhase.Lobby)
+        {
+            redScore = 0;
+            blueScore = 0;
+            GameObject.Find("PlayerManager").GetComponent<PlayerInputManager>().DisableJoining();
+            StartCombatPhase();
         }
     }
 
@@ -155,7 +200,6 @@ public class GameManager : MonoBehaviour
                 blueTeam.Add(player);
                 player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint, 0);
             }
-            redTeam.Add(player);
         }
     }
 
