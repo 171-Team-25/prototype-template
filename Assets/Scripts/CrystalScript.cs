@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CrystalScript : Damageable
 {
-    [SerializeField] teamName team = teamName.red;
-
     private void Start()
     {
         GameManager.Instance.AddCrystal(gameObject);
@@ -20,15 +18,11 @@ public class CrystalScript : Damageable
         }
         health = maxHealth;
     }
-    public override void TakeDamage(float damage)
+
+    public override void Die()
     {
-        health -= damage;
-        if (health <= 0)
-        {
-            //PLAY DEATH ANIMATION
-            GameManager.Instance.DestroyCrystal(gameObject);
-            Debug.Log(this.name.ToString() + " DIED");
-        }
+        Debug.Log(this.name.ToString() + " DIED");
+        GameManager.Instance.DestroyCrystal(gameObject);
     }
 
     public teamName GetTeam()

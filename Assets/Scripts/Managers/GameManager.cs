@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     private List<GameObject> playerList = new List<GameObject>();
+    private int playersReady;
     private List<GameObject> redTeam = new List<GameObject>();
     private List<GameObject> blueTeam = new List<GameObject>();
     private bool redCanSpawn = true, blueCanSpawn = true;
@@ -31,6 +33,12 @@ public class GameManager : MonoBehaviour
     public Transform blueSpawnPoint;
 
     private int redScore = 0, blueScore = 0;
+
+    private List<UpgradeCard> upgradeCards = new List<UpgradeCard>();
+    private System.Random rng = new System.Random(); // Random generator for better randomness
+    private Sprite currCardVisual;
+    public delegate void GameEvent();
+    public static event GameEvent UpgradeEvent, CombatPhaseStart;
 
     private void Awake()
     {
@@ -47,22 +55,73 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        InitializeUpgradeCards();
         TransitionToNextPhase();
         redSpawnPoint = GameObject.Find("RedSpawn").transform;
         blueSpawnPoint = GameObject.Find("BlueSpawn").transform;
+    }
+
+    private void InitializeUpgradeCards()
+    {
+        currCardVisual = Resources.Load<Sprite>("CardVisuals/AsolUpgrade");
+        upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(AsolUpgrade), "Surround yourself with 2 orbs of death, each dealing 10 damage"));
+        currCardVisual = Resources.Load<Sprite>("CardVisuals/ShieldUpgrade");
+        upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(ShieldUpgrade), "Surround yourself with a forcefield which can absorb 100 damage"));
+        currCardVisual = Resources.Load<Sprite>("CardVisuals/RegenUpgrade");
+        upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(RegenUpgrade), "Heal 10 health every 5 seconds"));
+    }
+
+    public List<UpgradeCard> GetRandomUpgradeCards(int numberOfCards)
+    {
+        List<UpgradeCard> randomCards = new List<UpgradeCard>();
+
+        if (upgradeCards.Count <= numberOfCards)
+        {
+            // If there are fewer or equal cards than requested, return duplicates of all cards
+            foreach (UpgradeCard card in upgradeCards)
+            {
+                randomCards.Add(card.Clone());
+            }
+            return randomCards;
+        }
+
+        List<int> selectedIndexes = new List<int>();
+        while (selectedIndexes.Count < numberOfCards)
+        {
+            int randomIndex = rng.Next(upgradeCards.Count); // Get a random index
+
+            if (!selectedIndexes.Contains(randomIndex)) // Ensure we don't select the same card twice
+            {
+                selectedIndexes.Add(randomIndex);
+                randomCards.Add(upgradeCards[randomIndex].Clone()); // Add a clone of the selected card
+            }
+        }
+
+        return randomCards;
     }
 
     public void StartUpgradePhase()
     {
         CurrentPhase = GamePhase.Upgrade;
         Debug.Log("Upgrade phase started.");
-
+        UpgradeEvent.Invoke();
+        playersReady = playerList.Count;
         // Add logic specific to the Upgrade Phase
         // For example: enable upgrade UI, stop combat logic, etc.
     }
 
+    public void PlayerReadyUp()
+    {
+        playersReady--;
+        if (playersReady == 0)
+        {
+            TransitionToNextPhase();
+        }
+    }
+
     public void StartCombatPhase()
     {
+        CombatPhaseStart.Invoke();
         CurrentPhase = GamePhase.Combat;
         Debug.Log("Combat phase started.");
         InitializePlayers();

@@ -14,7 +14,8 @@ public class ProjectileScript : MonoBehaviour
     private void Start()
     {
         // Store the shooter (player) who fired the projectile
-        shooter = transform.root.gameObject;
+        
+
         // Destroy the projectile after a set lifetime if it doesn't collide with anything
         Destroy(gameObject, lifetime);
     }
@@ -22,22 +23,25 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Ignore collision with the shooter (player)
-        if (other.gameObject == shooter)
-        {
-            return;  // Skip collision handling if it’s the shooter
-        }
-
         // Check if the object hit is Damageable
         Damageable damageable = other.GetComponent<Damageable>();
         if (damageable != null)
         {
             // Apply damage to the Damageable object
-            damageable.TakeDamage(damage);
+            if(damageable.TakeDamage(damage, shooter.GetComponent<PlayerClass>().team)) //only if it's on another team
+            {
+                Destroy(gameObject);
+            }
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-        // Destroy the projectile upon collision
-        Destroy(gameObject);
-
+    public void SetShooter(GameObject player)
+    {
+        shooter = player;
+        Debug.Log(shooter.ToString() + " shot this fireball");
     }
 }
