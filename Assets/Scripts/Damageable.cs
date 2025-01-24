@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
-    [SerializeField] protected float maxHealth = 100f;
+    public float maxHealth = 100f;
     public float health;
+    public teamName team;
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
     }
 
-    public virtual void TakeDamage(float damage)
+    public bool TakeDamage(float damage, teamName team)
     {
-        health -= damage;
-        if (health <= 0)
+        if (team != this.team)
         {
-            //PLAY DEATH ANIMATION
-            Destroy(gameObject);
-            Debug.Log(this.name.ToString() + " DIED");
+            health -= damage;
+            if (health <= 0)
+            {
+                Die();
+            }
+            return true;
         }
+        else
+        {
+            return false;
+        }
+    }
+
+    public virtual void Die()
+    {
+        //PLAY DEATH ANIMATION
+        Destroy(gameObject);
+        Debug.Log(this.name.ToString() + " DIED");
     }
 }
