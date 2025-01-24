@@ -14,8 +14,7 @@ public class ProjectileScript : MonoBehaviour
     private void Start()
     {
         // Store the shooter (player) who fired the projectile
-        
-
+    
         // Destroy the projectile after a set lifetime if it doesn't collide with anything
         Destroy(gameObject, lifetime);
     }

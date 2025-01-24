@@ -213,15 +213,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9339623, g: 0.083704144, b: 0.083704144, a: 1}
+  m_Material: {fileID: 2100000, guid: b4da738fd0d779e4fadd353737c59b73, type: 2}
+  m_Color: {r: 0.7924528, g: 0.41491634, b: 0.41491634, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ddbe911866ca7254c927c0757f69e2b4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -884,6 +884,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   health: 0
+  team: 0
 --- !u!114 &1096818292418377706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,6 +903,7 @@ MonoBehaviour:
     cooldownTextUI: {fileID: 2666796498900426241}
     cooldownTimer: 5
     isOnCooldown: 0
+  playerCamera: {fileID: 0}
 --- !u!1 &4377336332020057543
 GameObject:
   m_ObjectHideFlags: 0

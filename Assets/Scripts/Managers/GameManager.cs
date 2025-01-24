@@ -151,12 +151,12 @@ public class GameManager : MonoBehaviour
             if (player.GetComponent<PlayerClass>().GetTeam() == teamName.red)
             {
                 redTeam.Add(player);
-                player.GetComponent<PlayerClass>().Respawn(redSpawnPoint, 0);
+                player.GetComponent<PlayerClass>().Respawn(redSpawnPoint.position, 0);
             }
             if (player.GetComponent<PlayerClass>().GetTeam() == teamName.blue)
             {
                 blueTeam.Add(player);
-                player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint, 0);
+                player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint.position, 0);
             }
             redTeam.Add(player);
         }
@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
         {
             if (redCanSpawn)
             {
-                player.GetComponent<PlayerClass>().Respawn(redSpawnPoint, 5);
+                player.GetComponent<PlayerClass>().Respawn(redSpawnPoint.position, 5);
             }
             else
             {
@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
         {
             if (blueCanSpawn)
             {
-                player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint, 5);
+                player.GetComponent<PlayerClass>().Respawn(blueSpawnPoint.position, 5);
             }
             else
             {
