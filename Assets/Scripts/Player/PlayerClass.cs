@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum teamName{
+public enum teamName
+{
     red,
     blue
 }
@@ -16,7 +17,7 @@ public class PlayerClass : Damageable
         health = maxHealth;
         GameManager.Instance.AddPlayer(gameObject);
         team = GameManager.Instance.AssignTeam(gameObject);
-        if(team == teamName.red)
+        if (team == teamName.red)
         {
             this.GetComponent<Renderer>().material.color = Color.red;
         }
@@ -29,7 +30,7 @@ public class PlayerClass : Damageable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public override void TakeDamage(float damage)
@@ -48,16 +49,15 @@ public class PlayerClass : Damageable
         return team;
     }
 
-    public void Respawn(Transform spawnPoint, float time)
+    public void Respawn(Vector3 spawnPoint, float time)
     {
         StartCoroutine(RespawnCoroutine(spawnPoint, time));
     }
 
-    private IEnumerator RespawnCoroutine(Transform spawnPoint, float time)
+    private IEnumerator RespawnCoroutine(Vector3 spawnPoint, float time)
     {
         yield return new WaitForSeconds(time);
-        transform.position = spawnPoint.position;
-        transform.rotation = spawnPoint.rotation;
+        transform.position = spawnPoint;
         gameObject.SetActive(true);
     }
 

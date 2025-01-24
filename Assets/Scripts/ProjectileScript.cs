@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
@@ -8,24 +8,22 @@ public class ProjectileScript : MonoBehaviour
     public float damage = 25f;   // Damage dealt by the projectile
 
     private GameObject shooter;  // Reference to the player (shooter) who fired the projectile
-    
-    
 
     private void Start()
     {
         // Store the shooter (player) who fired the projectile
         shooter = transform.root.gameObject;
+
         // Destroy the projectile after a set lifetime if it doesn't collide with anything
         Destroy(gameObject, lifetime);
     }
-    // Initialize method to set properties dynamically
 
     private void OnTriggerEnter(Collider other)
     {
         // Ignore collision with the shooter (player)
         if (other.gameObject == shooter)
         {
-            return;  // Skip collision handling if it’s the shooter
+            return;  // Skip collision handling if itï¿½s the shooter
         }
 
         // Check if the object hit is Damageable
@@ -38,6 +36,5 @@ public class ProjectileScript : MonoBehaviour
 
         // Destroy the projectile upon collision
         Destroy(gameObject);
-
     }
 }

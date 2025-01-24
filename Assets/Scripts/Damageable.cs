@@ -15,7 +15,7 @@ public class Damageable : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
-        if(health <= 0)
+        if (health <= 0)
         {
             //PLAY DEATH ANIMATION
             Destroy(gameObject);
