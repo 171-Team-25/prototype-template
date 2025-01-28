@@ -13,7 +13,7 @@ public class Damageable : MonoBehaviour
         health = maxHealth;
     }
 
-    public bool TakeDamage(float damage, teamName team)
+    public virtual bool TakeDamage(float damage, teamName team)
     {
         if (team != this.team)
         {

@@ -460,7 +460,19 @@ MonoBehaviour:
     m_ActionId: 9b257ae8-77b3-419e-8980-e9cdd84c6dd1
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8281401646520084818}
+        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 29356f0d-99fb-4ade-ae13-71aa7668c272
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
@@ -535,6 +547,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2f5f6bce-deb1-4bab-8241-0624e4f5d800
     m_ActionName: Player/Sprint[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2201279770499482891}
+        m_TargetAssemblyTypeName: PlayerClass, Assembly-CSharp
+        m_MethodName: Cast1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b2fde850-c876-4b1b-82ec-f0539fbff8b2
+    m_ActionName: Player/Cast1[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2201279770499482891}
+        m_TargetAssemblyTypeName: PlayerClass, Assembly-CSharp
+        m_MethodName: Cast2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 225b8554-626b-4052-9e43-f0e083dfcea3
+    m_ActionName: Player/Cast2[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -567,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 4535214257400077675, guid: 84adccc0ab8a41c4695242c8abd63ca9, type: 3}
-  attackForce: 15
+  attackForce: 25
   spawnOffset: 2
   rotationSpeed: 10
 --- !u!143 &3924261702699011542
@@ -611,6 +655,8 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   team: 0
+  active1: {fileID: 0}
+  active2: {fileID: 0}
 --- !u!1001 &2186220848090021842
 PrefabInstance:
   m_ObjectHideFlags: 0

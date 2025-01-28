@@ -62,6 +62,24 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cast1"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2fde850-c876-4b1b-82ec-f0539fbff8b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cast2"",
+                    ""type"": ""Button"",
+                    ""id"": ""225b8554-626b-4052-9e43-f0e083dfcea3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -293,6 +311,50 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dae184fb-759a-40e0-8dfa-723b9347d4e5"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Cast1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e0cc66d-9a03-41f6-aa7e-c23777c2f25b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cast1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5aa4d31-b9ca-45e6-a5ea-8987b95b0b1b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Cast2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4733f0c2-4cc8-4ac8-b430-68c6bb6c96c0"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cast2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -884,6 +946,8 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_Cast1 = m_Player.FindAction("Cast1", throwIfNotFound: true);
+        m_Player_Cast2 = m_Player.FindAction("Cast2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -961,6 +1025,8 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_Cast1;
+    private readonly InputAction m_Player_Cast2;
     public struct PlayerActions
     {
         private @Player1Input m_Wrapper;
@@ -969,6 +1035,8 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @Cast1 => m_Wrapper.m_Player_Cast1;
+        public InputAction @Cast2 => m_Wrapper.m_Player_Cast2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -990,6 +1058,12 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Cast1.started += instance.OnCast1;
+            @Cast1.performed += instance.OnCast1;
+            @Cast1.canceled += instance.OnCast1;
+            @Cast2.started += instance.OnCast2;
+            @Cast2.performed += instance.OnCast2;
+            @Cast2.canceled += instance.OnCast2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1006,6 +1080,12 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Cast1.started -= instance.OnCast1;
+            @Cast1.performed -= instance.OnCast1;
+            @Cast1.canceled -= instance.OnCast1;
+            @Cast2.started -= instance.OnCast2;
+            @Cast2.performed -= instance.OnCast2;
+            @Cast2.canceled -= instance.OnCast2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1192,6 +1272,8 @@ public partial class @Player1Input: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnCast1(InputAction.CallbackContext context);
+        void OnCast2(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

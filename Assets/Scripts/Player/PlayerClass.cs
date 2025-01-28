@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 public enum teamName{
     red,
     blue, 
@@ -11,6 +14,51 @@ public enum teamName{
 
 public class PlayerClass : Damageable
 {
+    public ActiveAbility active1, active2;
+    private bool canCast1, canCast2;
+
+    public void AddActiveAvility(ActiveAbility active)
+    {
+        if (active1 == null)
+        {
+            active1 = active;
+        }
+        else if (active2 == null)
+        {
+            active2 = active;
+        }
+        else
+        {
+            Debug.Log("Active slots full!");
+        }
+    }
+
+    public void Cast1(InputAction.CallbackContext context)
+    {
+        if (context.started && canCast1)
+        {
+            active1.Cast();
+            canCast1 = false;
+        }
+        else if (context.canceled)
+        {
+            canCast1 = true;
+        }
+    }
+
+    public void Cast2(InputAction.CallbackContext context)
+    {
+        if (context.started && canCast2)
+        {
+            active2.Cast();
+            canCast2 = false;
+        }
+        else if (context.canceled)
+        {
+            canCast2 = true;
+        }
+    }
+
     void Start()
     {
         health = maxHealth;

@@ -30,7 +30,7 @@ public class ProjectileScript : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        else
+        else if (other.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }
@@ -39,5 +39,10 @@ public class ProjectileScript : MonoBehaviour
     public void SetShooter(GameObject player)
     {
         shooter = player;
+    }
+
+    public GameObject GetShooter()
+    {
+        return shooter;
     }
 }

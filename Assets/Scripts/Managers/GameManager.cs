@@ -62,6 +62,24 @@ public class GameManager : MonoBehaviour
         lobbySpawnPoint = GameObject.Find("LobbySpawn").transform.position;
     }
 
+    public void BuffTeam(teamName team)
+    {
+        if(team == teamName.blue)
+        {
+            foreach (GameObject player in blueTeam)
+            {
+                player.GetComponent<PlayerAttack>().attackForce *= 1.3f;
+            }
+        }
+        if (team == teamName.red)
+        {
+            foreach (GameObject player in redTeam)
+            {
+                player.GetComponent<PlayerAttack>().attackForce *= 1.3f;
+            }
+        }
+    }
+
     private void InitializeUpgradeCards()
     {
         currCardVisual = Resources.Load<Sprite>("CardVisuals/AsolUpgrade");
@@ -70,6 +88,10 @@ public class GameManager : MonoBehaviour
         upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(ShieldUpgrade), "Surround yourself with a forcefield which can absorb 100 damage"));
         currCardVisual = Resources.Load<Sprite>("CardVisuals/RegenUpgrade");
         upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(RegenUpgrade), "Heal 10 health every 5 seconds"));
+        currCardVisual = Resources.Load<Sprite>("CardVisuals/SpeedActive");
+        upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(SpeedBoostActiveUpgrade), "Speed boost for 3 seconds, 8 second cooldown"));
+        currCardVisual = Resources.Load<Sprite>("CardVisuals/DeathBall");
+        upgradeCards.Add(new UpgradeCard(currCardVisual, typeof(OneShotActiveUpgrade), "Fires a death ball dealing 100 damage, 5 second cooldown"));
     }
 
     public List<UpgradeCard> GetRandomUpgradeCards(int numberOfCards)
